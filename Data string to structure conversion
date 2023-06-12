@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdint.h>
+
+typedef struct my_date_t {
+    uint8_t date;
+    uint8_t month;
+    uint16_t year;
+} my_date_t;
+
+typedef enum status_t {
+    SUCCESS,
+    NULL_PTR,
+    INCORRECT
+} status_t;
+
+status_t string_to_date_conv(char* input_string, my_date_t* res_date) {
+    if (input_string == NULL || res_date == NULL) {
+        return NULL_PTR;
+    }
+
+    int day, month, year;
+    int res = sscanf(input_string, "%d/%d/%d", &day, &month, &year);
+
+    if (res != 3) {
+        return INCORRECT;
+    }
+    if (day < 1 day > 31 month < 1 month > 12 year < 0) {
+        return INCORRECT;
+    }
+
+    res_date->date = (uint8_t)day;
+    res_date->month = (uint8_t)month;
+    res_date->year = (uint16_t)year;
+
+    return SUCCESS;
+}
+
+int main() {
+    char input_string[11]; 
+    printf("Enter a date (DD/MM/YYYY): ");
+    scanf("%10s", input_string);
+
+    my_date_t res_date;
+    status_t status = string_to_date_conv(input_string, &res_date);
+
+    if (status == SUCCESS) {
+        printf("Conversion successful:\n");
+        printf("Date: %d\n", res_date.date);
+        printf("Month: %d\n", res_date.month);
+        printf("Year: %d\n", res_date.year);
+    } else if (status == NULL_PTR) {
+        printf("Error: NULL pointers provided.\n");
+    } else if (status == INCORRECT) {
+        printf("Error: Incorrect values for date, month, or year.\n");
+    }
+
+    return 0;
+}
