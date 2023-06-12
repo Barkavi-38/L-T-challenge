@@ -24,7 +24,7 @@ status_t string_to_date_conv(char* input_string, my_date_t* res_date) {
     if (res != 3) {
         return INCORRECT;
     }
-    if (day < 1 day > 31 month < 1 month > 12 year < 0) {
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 0) {
         return INCORRECT;
     }
 
@@ -36,7 +36,7 @@ status_t string_to_date_conv(char* input_string, my_date_t* res_date) {
 }
 
 int main() {
-    char input_string[11]; 
+    char input_string[11];  
     printf("Enter a date (DD/MM/YYYY): ");
     scanf("%10s", input_string);
 
@@ -55,4 +55,4 @@ int main() {
     }
 
     return 0;
-}
+}       
